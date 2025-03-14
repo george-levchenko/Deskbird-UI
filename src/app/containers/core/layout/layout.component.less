@@ -1,0 +1,24 @@
+@header-height: 5rem;
+@footer-height: 4rem;
+
+app-header {
+  display: block;
+  position: fixed;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  height: @header-height;
+}
+
+
+main {
+  display: block;
+  width: 100%;
+  min-height: calc(100vh - @footer-height);
+}
+
+app-footer {
+  display: block;
+  width: 100%;
+  height: @footer-height;
+}
