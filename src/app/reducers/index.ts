@@ -3,7 +3,7 @@
 //   ActionReducer,
 //   ActionReducerMap,
 //   createFeatureSelector,
-//   createSelector,
+//   createSelector
 // } from '@ngrx/store';
 //
 // export interface State {
