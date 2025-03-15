@@ -12,24 +12,28 @@
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <p-floatlabel class="input-wrapper" variant="on">
-        <input pInputText class="input" id="username" formControlName="username" autocomplete="off" />
+        <input pInputText id="username" formControlName="username" autocomplete="off" fluid />
         <label for="username">Username</label>
       </p-floatlabel>
       <ng-container
         *ngTemplateOutlet="
           errorsTemplate;
-          context: { field: usernameField, minLength: 6, maxLength: 60 }
+          context: { field: usernameField, minLength, maxLength: maxLengthUsername }
         "></ng-container>
 
       <p-floatlabel class="input-wrapper" variant="on">
-        <p-password class="input" id="password" formControlName="password" autocomplete="off" [feedback]="false" />
+        <p-password id="password" formControlName="password" autocomplete="off" [feedback]="false" fluid />
         <label for="password">Password</label>
       </p-floatlabel>
       <ng-container
         *ngTemplateOutlet="
           errorsTemplate;
-          context: { field: passwordField, minLength: 6, maxLength: 100 }
+          context: { field: passwordField, minLength, maxLength: maxLengthPassword }
         "></ng-container>
+
+      @if (form.errors?.['unauthenticated']) {
+        <p-message icon="pi pi-times-circle" severity="error">Username or Password incorrect!</p-message>
+      }
 
       <p-button class="submit-button" label="Sign In" type="submit" [loading]="loading()" [disabled]="form.invalid" />
     </form>
