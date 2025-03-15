@@ -1,0 +1,47 @@
+@import (reference) "../../../../styles/reference";
+
+form {
+  margin-top: 10px;
+}
+
+.input-wrapper {
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: red;
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
+.checkbox-label {
+  margin-left: 10px;
+}
+
+.buttons-wrapper {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+
+.cancel-button {
+  width: 50%;
+  margin: 0 10px;
+}
+
+.submit-button {
+  width: 50%;
+  margin: 0 10px;
+
+  &::ng-deep {
+    button {
+      background-color: @color---new--violet;
+      border: none;
+
+      &:hover {
+        background-color: @color---purplish-blue;
+        border: none;
+      }
+    }
+  }
+}

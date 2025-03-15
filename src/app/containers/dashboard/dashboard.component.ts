@@ -8,18 +8,21 @@ import { EllipsisPipe } from '../../utils/pipes/ellipsis.pipe';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
+import { UserFormComponent } from './user-form/user-form.component';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Card, TableModule, Tooltip, EllipsisPipe, ButtonDirective, ConfirmPopupModule, DialogModule],
+  imports: [Card, TableModule, Tooltip, EllipsisPipe, ButtonDirective, ConfirmPopupModule, DialogModule, UserFormComponent],
   providers: [ConfirmationService],
 })
 export class DashboardComponent implements OnInit {
   readonly isAdmin = signal(false);
   readonly users = signal<User[]>([]);
+  readonly selectedUser = signal<User | null>(null);
+  readonly userModalVisible = signal(false);
 
   readonly confirmationService = inject(ConfirmationService);
 
@@ -39,13 +42,24 @@ export class DashboardComponent implements OnInit {
     ]);
   }
 
-  createUser(): void {
-    // @ToDo open dialog
+  openUserModal(user?: User): void {
+    this.selectedUser.set(user || null);
+    this.userModalVisible.set(true);
+  }
+
+  closeUserModal(): void {
+    this.userModalVisible.set(false);
+    this.selectedUser.set(null);
+  }
+
+  createUser(user: User): void {
+    console.log(user);
+    //ToDo create user action
   }
 
   editUser(user: User): void {
     console.log(user);
-    // @ToDo open dialog
+    //ToDo edit user action
   }
 
   deleteUser(event: Event, user: User): void {

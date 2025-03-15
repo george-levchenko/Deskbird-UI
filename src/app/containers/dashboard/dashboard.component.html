@@ -1,5 +1,4 @@
 <p-card class="dashboard-container">
-  <p-confirmPopup #confirmPopup></p-confirmPopup>
   <p-table [value]="users()" [tableStyle]="{ width: '100%' }" size="small" stripedRows>
     <ng-template #caption>
       <div class="caption-wrapper">
@@ -8,10 +7,10 @@
           <button
             pButton
             class="button-add"
-            (click)="createUser()"
+            (click)="openUserModal()"
             icon="pi pi-plus"
             size="small"
-            pTooltip="Add User"
+            pTooltip="Create User"
             tooltipPosition="left"></button>
         }
       </div>
@@ -38,7 +37,7 @@
               class="button-edit"
               type="button"
               icon="pi pi-pencil"
-              (click)="editUser(user)"
+              (click)="openUserModal(user)"
               size="small"
               severity="secondary"
               pTooltip="Edit User"
@@ -59,3 +58,17 @@
     </ng-template>
   </p-table>
 </p-card>
+
+<p-dialog
+  [header]="selectedUser() ? 'Edit User' : 'Create User'"
+  [modal]="true"
+  [visible]="userModalVisible()"
+  (visibleChange)="closeUserModal()"
+  [style]="{ width: '600px', margin: '0 20px' }">
+  <app-user-form
+    [selectedUser]="selectedUser()"
+    (submitUser)="selectedUser() ? editUser($event) : createUser($event)"
+    (closeModal)="closeUserModal()" />
+</p-dialog>
+
+<p-confirmPopup #confirmPopup></p-confirmPopup>
