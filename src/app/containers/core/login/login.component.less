@@ -1,0 +1,109 @@
+@import (reference) "../../../../styles/reference";
+
+.login {
+
+  &-wrapper {
+    min-height: 800px;
+    overflow: auto;
+    height: 100vh;
+    background: #7646ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  &-container {
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 600px;
+    border-radius: 8px;
+    box-shadow: 18px 25px 73px #00000069;
+    position: relative;
+    padding: 0 10px;
+    margin: 0 20px;
+
+    &::ng-deep {
+      .p-card {
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+.brand-logo {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  margin-top: 90px;
+}
+
+.header {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-top: 0;
+}
+
+.small-text {
+  font-size: 0.7rem;
+  margin-left: 0.5rem;
+  font-weight: normal;
+  font-style: italic;
+}
+
+.input-wrapper {
+  margin-bottom: 20px;
+}
+
+.input {
+  width: 100%;
+
+  &::ng-deep {
+    .p-inputwrapper {
+      width: 100%;
+    }
+
+    .p-password-input {
+      width: 100%;
+    }
+  }
+}
+
+.error-message {
+  color: red;
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
+.submit-button {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 90px;
+
+  &::ng-deep {
+    button {
+      width: 100%;
+      background-color: @color---new--violet;
+      border: none;
+
+      &:hover {
+        background-color: @color---purplish-blue;
+        border: none;
+      }
+    }
+  }
+}
+
+
+

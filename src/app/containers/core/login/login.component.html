@@ -1,0 +1,51 @@
+<div class="login-wrapper">
+  <a href="/" class="brand-logo">
+    <img ngSrc="/icons/deskbird-logo-text.svg" priority alt="deskbird" height="29" width="147" />
+  </a>
+
+  <p-card class="login-container">
+    <div class="logo-container">
+      <img ngSrc="/icons/deskbird-logo.svg" priority alt="deskbird logo" height="165" width="250" />
+    </div>
+
+    <h1 class="header">Sign in to deskbird<sup class="small-text">assessment</sup></h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <p-floatlabel class="input-wrapper" variant="on">
+        <input pInputText class="input" id="username" formControlName="username" autocomplete="off" />
+        <label for="username">Username</label>
+      </p-floatlabel>
+      <ng-container
+        *ngTemplateOutlet="
+          errorsTemplate;
+          context: { field: usernameField, minLength: 6, maxLength: 60 }
+        "></ng-container>
+
+      <p-floatlabel class="input-wrapper" variant="on">
+        <p-password class="input" id="password" formControlName="password" autocomplete="off" [feedback]="false" />
+        <label for="password">Password</label>
+      </p-floatlabel>
+      <ng-container
+        *ngTemplateOutlet="
+          errorsTemplate;
+          context: { field: passwordField, minLength: 6, maxLength: 100 }
+        "></ng-container>
+
+      <p-button class="submit-button" label="Sign In" type="submit" [loading]="loading()" [disabled]="form.invalid" />
+    </form>
+  </p-card>
+</div>
+
+<ng-template #errorsTemplate let-field="field" let-minLength="minLength" let-maxLength="maxLength">
+  @if (field?.invalid && field?.dirty) {
+    <div class="error-message">
+      @if (field.errors?.['required']) {
+        <small class="p-error">Field is required.</small>
+      } @else if (field.errors?.['minlength']) {
+        <small class="p-error">Field must be at least {{ minLength }} characters long.</small>
+      } @else if (field.errors?.['maxlength']) {
+        <small class="p-error">Field must be less than {{ maxLength }} characters.</small>
+      }
+    </div>
+  }
+</ng-template>
