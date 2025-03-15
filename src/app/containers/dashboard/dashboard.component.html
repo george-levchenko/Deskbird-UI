@@ -1,0 +1,36 @@
+<p-card class="dashboard-container">
+  <h1>Welcome to our <span class="important-text">USER'S</span> list</h1>
+
+  <p-table [value]="users()" [tableStyle]="{ width: '100%' }" size="small" stripedRows>
+    <ng-template #header>
+      <tr>
+        <th style="width: 40%">Username</th>
+        <th style="width: 40%">Password</th>
+        <th>Admin</th>
+        @if (isAdmin()) {
+          <th></th>
+        }
+      </tr>
+    </ng-template>
+    <ng-template #body let-user>
+      <tr>
+        <td [pTooltip]="user.username" tooltipPosition="left">{{ user.username | ellipsis: 40 }}</td>
+        <td [pTooltip]="user.password" tooltipPosition="left">{{ user.password | ellipsis: 40 }}</td>
+        <td>{{ user.isAdmin ? 'Yes' : 'No' }}</td>
+        @if (isAdmin()) {
+          <td>
+            <button
+              pButton
+              class="edit-button"
+              type="button"
+              icon="pi pi-pencil"
+              (click)="editUser(user)"
+              rounded
+              severity="secondary"
+              pTooltip="Edit"></button>
+          </td>
+        }
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

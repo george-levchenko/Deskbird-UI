@@ -35,7 +35,13 @@
         <p-message icon="pi pi-times-circle" severity="error">Username or Password incorrect!</p-message>
       }
 
-      <p-button class="submit-button" label="Sign In" type="submit" [loading]="loading()" [disabled]="form.invalid" />
+      <p-button
+        class="submit-button"
+        label="Sign In"
+        type="submit"
+        fluid
+        [loading]="loading()"
+        [disabled]="form.invalid" />
     </form>
   </p-card>
 </div>
