@@ -7,7 +7,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Password } from 'primeng/password';
 import { Button } from 'primeng/button';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { Store } from '@ngrx/store';
 import { Message } from 'primeng/message';
 
 @Component({
@@ -27,7 +26,7 @@ export class LoginComponent implements OnInit {
   readonly loading = signal(false);
 
   readonly fb = inject(FormBuilder);
-  readonly store = inject(Store);
+  // readonly store = inject(Store);
 
   get usernameField() {
     return this.form.get('username');
