@@ -1,13 +1,27 @@
 <p-card class="dashboard-container">
-  <h1>Welcome to our <span class="important-text">USER'S</span> list</h1>
-
+  <p-confirmPopup #confirmPopup></p-confirmPopup>
   <p-table [value]="users()" [tableStyle]="{ width: '100%' }" size="small" stripedRows>
+    <ng-template #caption>
+      <div class="caption-wrapper">
+        <h1>Welcome to our <span class="important-text">USER'S</span> list</h1>
+        @if (isAdmin()) {
+          <button
+            pButton
+            class="button-add"
+            (click)="createUser()"
+            icon="pi pi-plus"
+            size="small"
+            pTooltip="Add User"
+            tooltipPosition="left"></button>
+        }
+      </div>
+    </ng-template>
     <ng-template #header>
       <tr>
         <th style="width: 40%">Username</th>
-        <th style="width: 40%">Password</th>
-        <th>Admin</th>
         @if (isAdmin()) {
+          <th style="width: 40%">Password</th>
+          <th>Admin</th>
           <th></th>
         }
       </tr>
@@ -15,19 +29,30 @@
     <ng-template #body let-user>
       <tr>
         <td [pTooltip]="user.username" tooltipPosition="left">{{ user.username | ellipsis: 40 }}</td>
-        <td [pTooltip]="user.password" tooltipPosition="left">{{ user.password | ellipsis: 40 }}</td>
-        <td>{{ user.isAdmin ? 'Yes' : 'No' }}</td>
         @if (isAdmin()) {
+          <td [pTooltip]="user.password" tooltipPosition="left">{{ user.password | ellipsis: 40 }}</td>
+          <td>{{ user.isAdmin ? 'Yes' : 'No' }}</td>
           <td>
             <button
               pButton
-              class="edit-button"
+              class="button-edit"
               type="button"
               icon="pi pi-pencil"
               (click)="editUser(user)"
-              rounded
+              size="small"
               severity="secondary"
-              pTooltip="Edit"></button>
+              pTooltip="Edit User"
+              tooltipPosition="left"></button>
+            <button
+              pButton
+              class="button-delete"
+              type="button"
+              icon="pi pi-times"
+              (click)="deleteUser($event, user)"
+              size="small"
+              severity="danger"
+              pTooltip="Delete User"
+              tooltipPosition="right"></button>
           </td>
         }
       </tr>

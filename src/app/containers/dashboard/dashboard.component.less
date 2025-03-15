@@ -12,13 +12,56 @@
   }
 }
 
+.caption-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  padding-right: 50px;
+
+  h1 {
+    text-align: center;
+    flex-grow: 1;
+  }
+
+  .button-add {
+    position: absolute;
+    right: 0;
+  }
+}
+
 .important-text {
   color: @color---new--violet;
 }
 
-.edit-button {
-  width: 48px;
-  height: 48px;
-  background-color: @color---new--body-background;
-  color: @color---new--violet
+.button {
+
+  &-edit {
+    width: 40px;
+    height: 40px;
+    background-color: @color---new--body-background;
+    color: @color---new--violet;
+    margin-right: 5px;
+    border-radius: 50%;
+  }
+
+  &-delete {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    color: red;
+    border-color: red;
+    border-radius: 50%;
+  }
+
+  &-add {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    color: #33cccc;
+    border-radius: 50%;
+    border-color: #33cccc;
+    border-width: 3px;
+  }
 }
