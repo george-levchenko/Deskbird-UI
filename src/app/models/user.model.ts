@@ -4,3 +4,7 @@ export interface User {
   password: string;
   isAdmin: boolean;
 }
+
+export interface UserSimplified {
+  username: string;
+}

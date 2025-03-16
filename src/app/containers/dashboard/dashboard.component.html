@@ -1,5 +1,9 @@
 <p-card class="dashboard-container">
-  <p-table [value]="users()" [tableStyle]="{ width: '100%' }" size="small" stripedRows>
+  <p-table
+    [value]="selectUsersLoading() ? skeletonPlaceholder : users()"
+    [tableStyle]="{ width: '100%' }"
+    size="small"
+    stripedRows>
     <ng-template #caption>
       <div class="caption-wrapper">
         <h1>Welcome to our <span class="important-text">USER'S</span> list</h1>
@@ -26,34 +30,47 @@
       </tr>
     </ng-template>
     <ng-template #body let-user>
+      @if (selectUsersLoading()) {
+        <ng-container *ngTemplateOutlet="skeleton"></ng-container>
+      } @else {
+        <tr>
+          <td [pTooltip]="user.username" tooltipPosition="left">{{ user.username | ellipsis: 40 }}</td>
+          @if (isAdmin()) {
+            <td [pTooltip]="user.password" tooltipPosition="left">{{ user.password | ellipsis: 40 }}</td>
+            <td>{{ user.isAdmin ? 'Yes' : 'No' }}</td>
+            <td>
+              <button
+                pButton
+                class="button-edit"
+                type="button"
+                icon="pi pi-pencil"
+                (click)="openUserModal(user)"
+                size="small"
+                severity="secondary"
+                pTooltip="Edit User"
+                tooltipPosition="left"></button>
+              <button
+                pButton
+                class="button-delete"
+                type="button"
+                icon="pi pi-times"
+                (click)="deleteUser($event, user)"
+                size="small"
+                severity="danger"
+                pTooltip="Delete User"
+                tooltipPosition="right"></button>
+            </td>
+          }
+        </tr>
+      }
+    </ng-template>
+
+    <ng-template #skeleton>
       <tr>
-        <td [pTooltip]="user.username" tooltipPosition="left">{{ user.username | ellipsis: 40 }}</td>
-        @if (isAdmin()) {
-          <td [pTooltip]="user.password" tooltipPosition="left">{{ user.password | ellipsis: 40 }}</td>
-          <td>{{ user.isAdmin ? 'Yes' : 'No' }}</td>
-          <td>
-            <button
-              pButton
-              class="button-edit"
-              type="button"
-              icon="pi pi-pencil"
-              (click)="openUserModal(user)"
-              size="small"
-              severity="secondary"
-              pTooltip="Edit User"
-              tooltipPosition="left"></button>
-            <button
-              pButton
-              class="button-delete"
-              type="button"
-              icon="pi pi-times"
-              (click)="deleteUser($event, user)"
-              size="small"
-              severity="danger"
-              pTooltip="Delete User"
-              tooltipPosition="right"></button>
-          </td>
-        }
+        <td><p-skeleton /></td>
+        <td><p-skeleton /></td>
+        <td><p-skeleton /></td>
+        <td><p-skeleton /></td>
       </tr>
     </ng-template>
   </p-table>

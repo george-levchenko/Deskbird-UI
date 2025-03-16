@@ -9,37 +9,47 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { UserFormComponent } from './user-form/user-form.component';
+import { Store } from '@ngrx/store';
+import { addUser, deleteUser, loadUsers, updateUser } from '../../store/users/users.actions';
+import { selectUsers, selectUsersLoading } from '../../store/users/users.selectors';
+import { Skeleton } from 'primeng/skeleton';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Card, TableModule, Tooltip, EllipsisPipe, ButtonDirective, ConfirmPopupModule, DialogModule, UserFormComponent],
+  imports: [
+    Card,
+    TableModule,
+    Tooltip,
+    EllipsisPipe,
+    ButtonDirective,
+    ConfirmPopupModule,
+    DialogModule,
+    UserFormComponent,
+    Skeleton,
+    NgTemplateOutlet,
+  ],
   providers: [ConfirmationService],
 })
 export class DashboardComponent implements OnInit {
+  private readonly confirmationService = inject(ConfirmationService);
+  private readonly store = inject(Store);
+
+  skeletonPlaceholder = new Array(10).fill({});
+
+  readonly users = this.store.selectSignal(selectUsers);
+  readonly selectUsersLoading = this.store.selectSignal(selectUsersLoading);
   readonly isAdmin = signal(false);
-  readonly users = signal<User[]>([]);
   readonly selectedUser = signal<User | null>(null);
   readonly userModalVisible = signal(false);
-
-  readonly confirmationService = inject(ConfirmationService);
 
   ngOnInit(): void {
     //   @Todo Receive isAdmin from Auth
     this.isAdmin.set(true);
-
-    //   @Todo Action to receive users and receive them throw select
-    this.users.set([
-      { id: '1', username: 'George', password: '123456dsadasdsadsadadsadasda123456dsadasdsadsadadsadasdasdasdasdassdasdasdas', isAdmin: true },
-      { id: '2', username: 'George2', password: '1234567', isAdmin: true },
-      { id: '3', username: 'VataVata', password: '1234565', isAdmin: false },
-      { id: '4', username: 'Lalala', password: '1234563', isAdmin: false },
-      { id: '3', username: 'VataVata', password: '1234565', isAdmin: false },
-      { id: '4', username: 'Lalala', password: '1234563', isAdmin: false },
-      { id: '5', username: 'Omgmgmgmg', password: '1234563', isAdmin: false },
-    ]);
+    this.store.dispatch(loadUsers());
   }
 
   openUserModal(user?: User): void {
@@ -53,13 +63,13 @@ export class DashboardComponent implements OnInit {
   }
 
   createUser(user: User): void {
-    console.log(user);
-    //ToDo create user action
+    this.store.dispatch(addUser({ user }));
+    this.userModalVisible.set(false);
   }
 
   editUser(user: User): void {
-    console.log(user);
-    //ToDo edit user action
+    this.store.dispatch(updateUser({ user }));
+    this.userModalVisible.set(false);
   }
 
   deleteUser(event: Event, user: User): void {
@@ -78,8 +88,7 @@ export class DashboardComponent implements OnInit {
         severity: 'danger',
       },
       accept: () => {
-        console.log(user);
-        //ToDo delete user action
+        this.store.dispatch(deleteUser({ id: user.id as string }));
       },
     });
   }

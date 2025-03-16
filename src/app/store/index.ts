@@ -1,13 +1,13 @@
-// import { isDevMode } from '@angular/core';
-// import {
-//   ActionReducer,
-//   ActionReducerMap,
-//   createFeatureSelector,
-//   createSelector
-// } from '@ngrx/store';
-//
-// export interface State {
-//
-// }
-//
-export const reducers = {};
+import { ActionReducerMap } from '@ngrx/store';
+import { usersReducer, UsersState } from './users/users.reducer';
+import { UserEffects } from './users/users.effects';
+
+export interface State {
+  users: UsersState;
+}
+
+export const reducers: ActionReducerMap<State> = {
+  users: usersReducer,
+};
+
+export const effects = [UserEffects];

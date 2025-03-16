@@ -16,6 +16,8 @@ import { Checkbox } from 'primeng/checkbox';
   imports: [ReactiveFormsModule, FloatLabel, Password, Button, InputText, NgTemplateOutlet, Checkbox],
 })
 export class UserFormComponent implements OnInit {
+  private readonly fb = inject(FormBuilder);
+
   form!: FormGroup;
   minLength = 6;
   maxLengthUsername = 60;
@@ -33,8 +35,6 @@ export class UserFormComponent implements OnInit {
     });
     this.form.markAsPristine();
   });
-
-  readonly fb = inject(FormBuilder);
 
   get usernameField() {
     return this.form.get('username');

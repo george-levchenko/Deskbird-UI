@@ -6,7 +6,6 @@ import { InputText } from 'primeng/inputtext';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Password } from 'primeng/password';
 import { Button } from 'primeng/button';
-import { UntilDestroy } from '@ngneat/until-destroy';
 import { Message } from 'primeng/message';
 
 @Component({
@@ -16,17 +15,16 @@ import { Message } from 'primeng/message';
   styleUrl: './login.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-@UntilDestroy()
 export class LoginComponent implements OnInit {
+  private readonly fb = inject(FormBuilder);
+  // private readonly store = inject(Store);
+
   form!: FormGroup;
   minLength = 6;
   maxLengthUsername = 60;
   maxLengthPassword = 100;
 
   readonly loading = signal(false);
-
-  readonly fb = inject(FormBuilder);
-  // readonly store = inject(Store);
 
   get usernameField() {
     return this.form.get('username');
