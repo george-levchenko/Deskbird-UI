@@ -6,7 +6,7 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./containers/core/layout/layout.component').then(c => c.LayoutComponent),
-    canActivate: [],
+    // canActivate: [AuthGuard], @ToDo remove comment
     children: [{ path: 'dashboard', loadComponent: () => import('./containers/dashboard/dashboard.component').then(c => c.DashboardComponent) }],
   },
   { path: '**', loadComponent: () => import('./containers/core/not-found/not-found.component').then(c => c.NotFoundComponent) },

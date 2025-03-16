@@ -10,13 +10,14 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import Material from '@primeng/themes/material';
 import { MessageService } from 'primeng/api';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './utils/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
