@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
-import { Store, StoreModule } from '@ngrx/store';
+import { provideStore } from '@ngrx/store';
+import { reducers } from '../../store';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -9,8 +10,8 @@ describe('DashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DashboardComponent, StoreModule.forRoot({})],
-      providers: [Store],
+      imports: [DashboardComponent],
+      providers: [provideStore(reducers)],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardComponent);
