@@ -39,26 +39,28 @@
             <td [pTooltip]="user.password" tooltipPosition="left">{{ user.password | ellipsis: 40 }}</td>
             <td>{{ user.isAdmin ? 'Yes' : 'No' }}</td>
             <td>
-              <button
-                pButton
-                class="button-edit"
-                type="button"
-                icon="pi pi-pencil"
-                (click)="openUserModal(user)"
-                size="small"
-                severity="secondary"
-                pTooltip="Edit User"
-                tooltipPosition="left"></button>
-              <button
-                pButton
-                class="button-delete"
-                type="button"
-                icon="pi pi-times"
-                (click)="deleteUser($event, user)"
-                size="small"
-                severity="danger"
-                pTooltip="Delete User"
-                tooltipPosition="right"></button>
+              <div class="buttons-wrapper">
+                <button
+                  pButton
+                  class="button-edit"
+                  type="button"
+                  icon="pi pi-pencil"
+                  (click)="openUserModal(user)"
+                  size="small"
+                  severity="secondary"
+                  pTooltip="Edit User"
+                  tooltipPosition="left"></button>
+                <button
+                  pButton
+                  class="button-delete"
+                  type="button"
+                  icon="pi pi-times"
+                  (click)="deleteUser($event, user)"
+                  size="small"
+                  severity="danger"
+                  pTooltip="Delete User"
+                  tooltipPosition="right"></button>
+              </div>
             </td>
           }
         </tr>
@@ -66,7 +68,7 @@
     </ng-template>
 
     <ng-template #skeleton>
-      <tr>
+      <tr class="skeleton-row">
         <td><p-skeleton /></td>
         <td><p-skeleton /></td>
         <td><p-skeleton /></td>

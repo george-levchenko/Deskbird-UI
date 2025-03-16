@@ -22,10 +22,7 @@ export class AuthEffects {
             const decodedToken = this.authService.decodeToken(token);
             return AuthActions.userLoginSuccess({ token, username: decodedToken?.username, isAdmin: decodedToken?.isAdmin });
           }),
-          catchError(error => {
-            AuthActions.userLoginError(error);
-            return of(error);
-          })
+          catchError(error => of(AuthActions.userLoginError(error)))
         )
       )
     );

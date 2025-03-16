@@ -22,7 +22,13 @@
         "></ng-container>
 
       <p-floatlabel class="input-wrapper" variant="on">
-        <p-password id="password" formControlName="password" autocomplete="off" [feedback]="false" fluid />
+        <p-password
+          id="password"
+          formControlName="password"
+          autocomplete="off"
+          [feedback]="false"
+          [toggleMask]="true"
+          fluid />
         <label for="password">Password</label>
       </p-floatlabel>
       <ng-container
