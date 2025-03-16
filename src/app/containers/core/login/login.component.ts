@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
 import { NgOptimizedImage, NgTemplateOutlet } from '@angular/common';
 import { Card } from 'primeng/card';
 import { FloatLabel } from 'primeng/floatlabel';
@@ -7,6 +7,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Password } from 'primeng/password';
 import { Button } from 'primeng/button';
 import { Message } from 'primeng/message';
+import { Store } from '@ngrx/store';
+import { selectAuthError, selectAuthLoading } from '../../../store/auth/auth.selectors';
+import { maxLengthPassword, maxLengthUsername, minLength } from '../../../utils/constants/user-credentials.const';
+import { userLogin } from '../../../store/auth/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -17,14 +21,20 @@ import { Message } from 'primeng/message';
 })
 export class LoginComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
-  // private readonly store = inject(Store);
+  private readonly store = inject(Store);
 
   form!: FormGroup;
-  minLength = 6;
-  maxLengthUsername = 60;
-  maxLengthPassword = 100;
+  readonly minLength = minLength;
+  readonly maxLengthUsername = maxLengthUsername;
+  readonly maxLengthPassword = maxLengthPassword;
 
-  readonly loading = signal(false);
+  readonly authLoading = this.store.selectSignal(selectAuthLoading);
+  readonly authError = this.store.selectSignal(selectAuthError);
+
+  readonly authErrorEffect = effect(() => {
+    // Can be changed to proper error messages from BE
+    this.form.setErrors({ unauthenticated: !!this.authError() });
+  });
 
   get usernameField() {
     return this.form.get('username');
@@ -39,12 +49,9 @@ export class LoginComponent implements OnInit {
       username: ['', [Validators.required, Validators.minLength(this.minLength), Validators.maxLength(this.maxLengthUsername)]],
       password: ['', [Validators.required, Validators.minLength(this.minLength), Validators.maxLength(this.maxLengthPassword)]],
     });
-
-    // @Todo Implement Select from Auth Error and this.form.setErrors({unauthenticated: true})
   }
 
   onSubmit(): void {
-    this.loading.set(true);
-    // @Todo Implement Action Login
+    this.store.dispatch(userLogin(this.form.getRawValue()));
   }
 }

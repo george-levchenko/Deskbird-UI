@@ -9,5 +9,15 @@
         alt="deskbird logo"
         class="brand_logo" />
     </a>
+
+    <div class="user-session-wrapper">
+      <i class="pi pi-user" [pTooltip]="username()" tooltipPosition="bottom" style="font-size: 2rem"></i>
+      <i
+        class="pi pi-sign-out"
+        pTooltip="Logout"
+        tooltipPosition="bottom"
+        (click)="logout()"
+        style="font-size: 2rem"></i>
+    </div>
   </div>
 </div>

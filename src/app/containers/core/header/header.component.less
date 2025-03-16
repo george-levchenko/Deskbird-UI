@@ -9,13 +9,13 @@
 
   &-container {
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
     max-width: 88rem;
     height: 100%;
     margin: 0 auto;
     border-radius: 0 0 1rem 1rem;
-    align-items: center;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     background-color: white;
@@ -26,4 +26,14 @@
   width: 100%;
   max-width: 12rem;
   height: auto;
+}
+
+.user-session-wrapper {
+  i {
+    margin-left: 1rem;
+
+    &.pi-sign-out {
+      cursor: pointer;
+    }
+  };
 }

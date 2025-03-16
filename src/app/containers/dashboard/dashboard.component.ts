@@ -14,6 +14,7 @@ import { addUser, deleteUser, loadUsers, updateUser } from '../../store/users/us
 import { selectUsers, selectUsersLoading } from '../../store/users/users.selectors';
 import { Skeleton } from 'primeng/skeleton';
 import { NgTemplateOutlet } from '@angular/common';
+import { selectIsAdmin } from '../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-dashboard',
@@ -42,13 +43,11 @@ export class DashboardComponent implements OnInit {
 
   readonly users = this.store.selectSignal(selectUsers);
   readonly selectUsersLoading = this.store.selectSignal(selectUsersLoading);
-  readonly isAdmin = signal(false);
+  readonly isAdmin = this.store.selectSignal(selectIsAdmin);
   readonly selectedUser = signal<User | null>(null);
   readonly userModalVisible = signal(false);
 
   ngOnInit(): void {
-    //   @Todo Receive isAdmin from Auth
-    this.isAdmin.set(true);
     this.store.dispatch(loadUsers());
   }
 

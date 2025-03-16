@@ -7,6 +7,7 @@ import { Button } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { NgTemplateOutlet } from '@angular/common';
 import { Checkbox } from 'primeng/checkbox';
+import { maxLengthPassword, maxLengthUsername, minLength } from '../../../utils/constants/user-credentials.const';
 
 @Component({
   selector: 'app-user-form',
@@ -19,9 +20,9 @@ export class UserFormComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
 
   form!: FormGroup;
-  minLength = 6;
-  maxLengthUsername = 60;
-  maxLengthPassword = 100;
+  readonly minLength = minLength;
+  readonly maxLengthUsername = maxLengthUsername;
+  readonly maxLengthPassword = maxLengthPassword;
 
   readonly selectedUser = input<User | null>();
   readonly submitUser = output<User>();

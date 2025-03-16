@@ -1,10 +1,10 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { inject, Injectable } from '@angular/core';
-import { UsersApiService } from '../../utils/services/users-api.service';
 import { catchError, exhaustMap, map, of } from 'rxjs';
 import * as UsersActions from './users.actions';
 import { User } from '../../models/user.model';
 import { MessageService } from 'primeng/api';
+import { UsersApiService } from '../../utils/services-api/users-api.service';
 
 @Injectable()
 export class UserEffects {
