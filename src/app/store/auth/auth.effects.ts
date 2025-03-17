@@ -18,10 +18,11 @@ export class AuthEffects {
       ofType(AuthActions.userLogin),
       exhaustMap(({ username, password }) =>
         this.authApiService.login({ username, password }).pipe(
-          map(({ token }) => {
-            const decodedToken = this.authService.decodeToken(token);
-            return AuthActions.userLoginSuccess({ token, username: decodedToken?.username, isAdmin: decodedToken?.isAdmin });
+          map(({ access_token }) => {
+            const decodedToken = this.authService.decodeToken(access_token);
+            return AuthActions.userLoginSuccess({ token: access_token, username: decodedToken?.username, isAdmin: decodedToken?.isAdmin });
           }),
+          tap(() => this.router.navigate(['/'])),
           catchError(error => of(AuthActions.userLoginError(error)))
         )
       )
@@ -34,7 +35,6 @@ export class AuthEffects {
         ofType(AuthActions.userLoginSuccess),
         tap(({ token }) => {
           this.authService.setSessionToken(token);
-          this.router.navigate(['/']);
         })
       );
     },

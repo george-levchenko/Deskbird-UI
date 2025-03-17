@@ -8,7 +8,7 @@ export class AuthApiService {
 
   private apiUrl = 'http://localhost:3000';
 
-  login(user: { username: string; password: string }): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, user);
+  login(user: { username: string; password: string }): Observable<{ access_token: string }> {
+    return this.http.post<{ access_token: string }>(`${this.apiUrl}/auth/login`, user);
   }
 }

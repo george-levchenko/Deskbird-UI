@@ -33,7 +33,7 @@
       @if (selectUsersLoading()) {
         <ng-container *ngTemplateOutlet="skeleton"></ng-container>
       } @else {
-        <tr>
+        <tr class="table-row">
           <td [pTooltip]="user.username" tooltipPosition="left">{{ user.username | ellipsis: 40 }}</td>
           @if (isAdmin()) {
             <td [pTooltip]="user.password" tooltipPosition="left">{{ user.password | ellipsis: 40 }}</td>
@@ -68,7 +68,7 @@
     </ng-template>
 
     <ng-template #skeleton>
-      <tr class="skeleton-row">
+      <tr class="table-row">
         <td><p-skeleton /></td>
         <td><p-skeleton /></td>
         <td><p-skeleton /></td>
@@ -78,16 +78,18 @@
   </p-table>
 </p-card>
 
-<p-dialog
-  [header]="selectedUser() ? 'Edit User' : 'Create User'"
-  [modal]="true"
-  [visible]="userModalVisible()"
-  (visibleChange)="closeUserModal()"
-  [style]="{ width: '600px', margin: '0 20px' }">
-  <app-user-form
-    [selectedUser]="selectedUser()"
-    (submitUser)="selectedUser() ? editUser($event) : createUser($event)"
-    (closeModal)="closeUserModal()" />
-</p-dialog>
+@if (userModalVisible()) {
+  <p-dialog
+    [header]="selectedUser() ? 'Edit User' : 'Create User'"
+    [modal]="true"
+    [visible]="userModalVisible()"
+    (visibleChange)="closeUserModal()"
+    [style]="{ width: '600px', margin: '0 20px' }">
+    <app-user-form
+      [selectedUser]="selectedUser()"
+      (submitUser)="selectedUser() ? editUser($event) : createUser($event)"
+      (closeModal)="closeUserModal()" />
+  </p-dialog>
+}
 
 <p-confirmPopup #confirmPopup></p-confirmPopup>

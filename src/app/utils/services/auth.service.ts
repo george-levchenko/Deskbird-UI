@@ -1,10 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { LocalStorageService } from './local-storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly localStorageService = inject(LocalStorageService);
+  private readonly jwtHelperService = inject(JwtHelperService);
 
   setSessionToken(token: string): void {
     if (token) {
@@ -24,11 +26,8 @@ export class AuthService {
     return jwtDecode(token);
   }
 
-  // isTokenExpired(expiryTime: number): boolean {
-  //   if (expiryTime) {
-  //     return ((1000 * expiryTime) - (new Date()).getTime()) < 5000;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  isTokenExpired(): boolean {
+    const token = this.getSessionToken();
+    return token ? this.jwtHelperService.isTokenExpired(token) : true;
+  }
 }

@@ -10,7 +10,7 @@ export interface AuthState {
 
 const initialState: AuthState = {
   username: undefined,
-  isAdmin: true /*ToDo Change to false */,
+  isAdmin: false,
   loading: false,
   error: undefined,
 };

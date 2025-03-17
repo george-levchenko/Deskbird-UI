@@ -29,6 +29,8 @@
 }
 
 .user-session-wrapper {
+  display: flex;
+
   i {
     margin-left: 1rem;
 
@@ -38,6 +40,10 @@
 
     &.pi-user {
       cursor: help;
+
+      @media (width <= 340px) {
+        display: none;
+      }
     }
   };
 }

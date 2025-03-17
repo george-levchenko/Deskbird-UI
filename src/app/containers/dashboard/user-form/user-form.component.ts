@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, input, OnInit, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnInit, output } from '@angular/core';
 import { User } from '../../../models/user.model';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FloatLabel } from 'primeng/floatlabel';
@@ -28,15 +28,6 @@ export class UserFormComponent implements OnInit {
   readonly submitUser = output<User>();
   readonly closeModal = output<void>();
 
-  readonly selectedUserEffect = effect(() => {
-    this.form.patchValue({
-      username: this.selectedUser()?.username || '',
-      password: this.selectedUser()?.password || '',
-      isAdmin: this.selectedUser()?.isAdmin || false,
-    });
-    this.form.markAsPristine();
-  });
-
   get usernameField() {
     return this.form.get('username');
   }
@@ -47,14 +38,20 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(this.minLength), Validators.maxLength(this.maxLengthUsername)]],
-      password: ['', [Validators.required, Validators.minLength(this.minLength), Validators.maxLength(this.maxLengthPassword)]],
-      isAdmin: [false],
+      username: [
+        this.selectedUser()?.username || '',
+        [Validators.required, Validators.minLength(this.minLength), Validators.maxLength(this.maxLengthUsername)],
+      ],
+      password: [
+        this.selectedUser()?.password || '',
+        [Validators.required, Validators.minLength(this.minLength), Validators.maxLength(this.maxLengthPassword)],
+      ],
+      isAdmin: [this.selectedUser()?.isAdmin || false],
     });
   }
 
   onSubmit(): void {
-    this.submitUser.emit(this.form.getRawValue());
+    this.submitUser.emit({ ...this.form.getRawValue(), id: this.selectedUser()?.id });
   }
 
   onCancel(): void {

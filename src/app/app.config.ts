@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection, isDevMode } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, isDevMode, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -12,6 +12,7 @@ import Material from '@primeng/themes/material';
 import { MessageService } from 'primeng/api';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './utils/interceptors/auth.interceptor';
+import { JwtModule } from '@auth0/angular-jwt';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,5 +30,13 @@ export const appConfig: ApplicationConfig = {
     provideEffects(effects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     MessageService,
+    importProvidersFrom(
+      JwtModule.forRoot({
+        config: {
+          tokenGetter: () => localStorage.getItem('access_token'),
+          allowedDomains: ['localhost:3000'],
+        },
+      })
+    ),
   ],
 };

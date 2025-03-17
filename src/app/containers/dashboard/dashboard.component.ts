@@ -39,7 +39,8 @@ export class DashboardComponent implements OnInit {
   private readonly confirmationService = inject(ConfirmationService);
   private readonly store = inject(Store);
 
-  skeletonPlaceholder = new Array(10).fill({});
+  // Might be better to remove, because API call is too fast
+  skeletonPlaceholder = new Array(3).fill({});
 
   readonly users = this.store.selectSignal(selectUsers);
   readonly selectUsersLoading = this.store.selectSignal(selectUsersLoading);
