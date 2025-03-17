@@ -21,10 +21,11 @@
     </ng-template>
     <ng-template #header>
       <tr>
-        <th style="width: 40%">Username</th>
+        <th style="width: 25%">Username</th>
+        <th style="width: 25%">Name</th>
+        <th style="width: 25%">Email</th>
+        <th style="width: 15%">Admin</th>
         @if (isAdmin()) {
-          <th style="width: 40%">Password</th>
-          <th>Admin</th>
           <th></th>
         }
       </tr>
@@ -34,10 +35,11 @@
         <ng-container *ngTemplateOutlet="skeleton"></ng-container>
       } @else {
         <tr class="table-row">
-          <td [pTooltip]="user.username" tooltipPosition="left">{{ user.username | ellipsis: 40 }}</td>
+          <td [pTooltip]="user.username" tooltipPosition="left">{{ user.username | ellipsis }}</td>
+          <td [pTooltip]="user.name" tooltipPosition="left">{{ (user.name | ellipsis) || '-' }}</td>
+          <td [pTooltip]="user.email" tooltipPosition="left">{{ (user.email | ellipsis) || '-' }}</td>
+          <td>{{ user.isAdmin ? 'Yes' : 'No' }}</td>
           @if (isAdmin()) {
-            <td [pTooltip]="user.password" tooltipPosition="left">{{ user.password | ellipsis: 40 }}</td>
-            <td>{{ user.isAdmin ? 'Yes' : 'No' }}</td>
             <td>
               <div class="buttons-wrapper">
                 <button
@@ -69,6 +71,7 @@
 
     <ng-template #skeleton>
       <tr class="table-row">
+        <td><p-skeleton /></td>
         <td><p-skeleton /></td>
         <td><p-skeleton /></td>
         <td><p-skeleton /></td>

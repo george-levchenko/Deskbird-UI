@@ -9,7 +9,7 @@ import { Button } from 'primeng/button';
 import { Message } from 'primeng/message';
 import { Store } from '@ngrx/store';
 import { selectAuthError, selectAuthLoading } from '../../../store/auth/auth.selectors';
-import { maxLengthPassword, maxLengthUsername, minLength } from '../../../utils/constants/user-credentials.const';
+import { maxLength, maxLengthPassword, minLength } from '../../../utils/constants/user-credentials.const';
 import { userLogin } from '../../../store/auth/auth.actions';
 
 @Component({
@@ -25,14 +25,13 @@ export class LoginComponent implements OnInit {
 
   form!: FormGroup;
   readonly minLength = minLength;
-  readonly maxLengthUsername = maxLengthUsername;
+  readonly maxLengthUsername = maxLength;
   readonly maxLengthPassword = maxLengthPassword;
 
   readonly authLoading = this.store.selectSignal(selectAuthLoading);
   readonly authError = this.store.selectSignal(selectAuthError);
 
   readonly authErrorEffect = effect(() => {
-    // Can be changed to proper error messages from BE
     this.form.setErrors({ unauthenticated: !!this.authError() });
   });
 

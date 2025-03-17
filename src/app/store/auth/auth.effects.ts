@@ -23,7 +23,7 @@ export class AuthEffects {
             return AuthActions.userLoginSuccess({ token: access_token, username: decodedToken?.username, isAdmin: decodedToken?.isAdmin });
           }),
           tap(() => this.router.navigate(['/'])),
-          catchError(error => of(AuthActions.userLoginError(error)))
+          catchError(error => of(AuthActions.userLoginError({ error: error?.error?.message })))
         )
       )
     );

@@ -3,8 +3,7 @@
     <input pInputText id="username" formControlName="username" autocomplete="off" fluid />
     <label for="username">Username</label>
   </p-floatlabel>
-  <ng-container
-    *ngTemplateOutlet="errorsTemplate; context: { field: usernameField, minLength, maxLength: maxLengthUsername }">
+  <ng-container *ngTemplateOutlet="errorsTemplate; context: { field: usernameField, minLength, maxLength }">
   </ng-container>
 
   <p-floatlabel class="input-wrapper" variant="on">
@@ -15,10 +14,28 @@
       [feedback]="false"
       [toggleMask]="true"
       fluid />
-    <label for="password">Password</label>
+    <label for="password"
+      >Password
+      @if (selectedUser()) {
+        <small>(optional change)</small>
+      }
+    </label>
   </p-floatlabel>
   <ng-container
     *ngTemplateOutlet="errorsTemplate; context: { field: passwordField, minLength, maxLength: maxLengthPassword }">
+  </ng-container>
+
+  <p-floatlabel class="input-wrapper" variant="on">
+    <input pInputText id="name" formControlName="name" autocomplete="off" fluid />
+    <label for="name">Name <small>(optional)</small></label>
+  </p-floatlabel>
+  <ng-container *ngTemplateOutlet="errorsTemplate; context: { field: nameField, minLength, maxLength }"> </ng-container>
+
+  <p-floatlabel class="input-wrapper" variant="on">
+    <input pInputText id="email" formControlName="email" autocomplete="off" fluid />
+    <label for="email">Email <small>(optional)</small></label>
+  </p-floatlabel>
+  <ng-container *ngTemplateOutlet="errorsTemplate; context: { field: emailField, minLength, maxLength }">
   </ng-container>
 
   <p-checkbox formControlName="isAdmin" id="isAdmin" [binary]="true" />
@@ -45,6 +62,8 @@
         <small class="p-error">Field must be at least {{ minLength }} characters long.</small>
       } @else if (field.errors?.['maxlength']) {
         <small class="p-error">Field must be less than {{ maxLength }} characters.</small>
+      } @else if (field.errors?.['customEmail']) {
+        <small class="p-error">Please provide valid email.</small>
       }
     </div>
   }

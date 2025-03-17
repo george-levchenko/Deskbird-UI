@@ -19,7 +19,7 @@ export class UserEffects {
         this.usersApiService.getUsers().pipe(
           map((users: User[]) => UsersActions.loadUsersSuccess({ users })),
           catchError(error => {
-            this.messageService.add({ severity: 'error', summary: 'Load Users Failed', detail: error.message });
+            this.messageService.add({ severity: 'error', summary: 'Load Users Failed', detail: error.error?.message || error.message });
             return of(error);
           })
         )
@@ -34,7 +34,7 @@ export class UserEffects {
         this.usersApiService.addUser(user).pipe(
           map((newUser: User) => UsersActions.addUserSuccess({ user: newUser })),
           catchError(error => {
-            this.messageService.add({ severity: 'error', summary: 'Create User Failed', detail: error.message });
+            this.messageService.add({ severity: 'error', summary: 'Create User Failed', detail: error.error?.message || error.message });
             return of(error);
           })
         )
@@ -49,7 +49,7 @@ export class UserEffects {
         this.usersApiService.updateUser(user).pipe(
           map((updatedUser: User) => UsersActions.updateUserSuccess({ user: updatedUser })),
           catchError(error => {
-            this.messageService.add({ severity: 'error', summary: 'Update User Failed', detail: error.message });
+            this.messageService.add({ severity: 'error', summary: 'Update User Failed', detail: error.error?.message || error.message });
             return of(error);
           })
         )
@@ -64,7 +64,7 @@ export class UserEffects {
         this.usersApiService.deleteUser(id).pipe(
           map(() => UsersActions.deleteUserSuccess({ id })),
           catchError(error => {
-            this.messageService.add({ severity: 'error', summary: 'Delete User Failed', detail: error.message });
+            this.messageService.add({ severity: 'error', summary: 'Delete User Failed', detail: error.error?.message || error.message });
             return of(error);
           })
         )

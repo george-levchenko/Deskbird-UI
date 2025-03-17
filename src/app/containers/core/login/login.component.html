@@ -38,7 +38,7 @@
         "></ng-container>
 
       @if (form.errors?.['unauthenticated']) {
-        <p-message icon="pi pi-times-circle" severity="error">Username or Password incorrect!</p-message>
+        <p-message icon="pi pi-times-circle" severity="error">{{ this.authError() }}</p-message>
       }
 
       <p-button
