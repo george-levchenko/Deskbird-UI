@@ -8,6 +8,7 @@ import { reducers } from './store';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      declarations: [AppComponent],
       imports: [AppComponent, JwtModule.forRoot({}), provideStore(reducers)],
       providers: [AuthService],
     }).compileComponents();
