@@ -130,6 +130,7 @@ describe('LoginComponent - with auth error', () => {
   it('should set form errors when authError signal is truthy', () => {
     // The effect sets errors based on the truthiness of authError.
     tick();
+    fixture.detectChanges();
     expect(component.form.errors).toEqual({ unauthenticated: true });
   });
 });
