@@ -34,10 +34,7 @@ export const appConfig: ApplicationConfig = {
     MessageService,
     importProvidersFrom(
       JwtModule.forRoot({
-        config: {
-          tokenGetter: () => inject(AuthService).getSessionToken(),
-          allowedDomains: ['localhost:3000'], // Need to be changed to environment variable
-        },
+        config: { tokenGetter: () => inject(AuthService).getSessionToken() },
       })
     ),
   ],
