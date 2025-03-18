@@ -65,6 +65,7 @@
                 <button
                   pButton
                   class="button-delete"
+                  [disabled]="username() === user.username"
                   type="button"
                   icon="pi pi-times"
                   (click)="deleteUser($event, user)"

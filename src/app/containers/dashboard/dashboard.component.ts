@@ -13,8 +13,8 @@ import { Store } from '@ngrx/store';
 import { addUser, deleteUser, loadUsers, updateUser } from '../../store/users/users.actions';
 import { selectUsers, selectUsersLoading } from '../../store/users/users.selectors';
 import { Skeleton } from 'primeng/skeleton';
-import { NgTemplateOutlet } from '@angular/common';
-import { selectIsAdmin } from '../../store/auth/auth.selectors';
+import { NgStyle, NgTemplateOutlet } from '@angular/common';
+import { selectIsAdmin, selectUsername } from '../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,6 +32,7 @@ import { selectIsAdmin } from '../../store/auth/auth.selectors';
     UserFormComponent,
     Skeleton,
     NgTemplateOutlet,
+    NgStyle,
   ],
   providers: [ConfirmationService],
 })
@@ -45,6 +46,7 @@ export class DashboardComponent implements OnInit {
   readonly users = this.store.selectSignal(selectUsers);
   readonly selectUsersLoading = this.store.selectSignal(selectUsersLoading);
   readonly isAdmin = this.store.selectSignal(selectIsAdmin);
+  readonly username = this.store.selectSignal(selectUsername);
   readonly selectedUser = signal<User | null>(null);
   readonly userModalVisible = signal(false);
 
