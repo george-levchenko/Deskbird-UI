@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LoginComponent } from './login.component';
@@ -129,6 +129,7 @@ describe('LoginComponent - with auth error', () => {
 
   it('should set form errors when authError signal is truthy', () => {
     // The effect sets errors based on the truthiness of authError.
+    tick();
     expect(component.form.errors).toEqual({ unauthenticated: true });
   });
 });
