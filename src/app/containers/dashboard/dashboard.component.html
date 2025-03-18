@@ -1,9 +1,11 @@
-<p-card class="dashboard-container">
+<p-card class="dashboard-container" role="region" [attr.aria-label]="'User Dashboard'">
   <p-table
     [value]="selectUsersLoading() ? skeletonPlaceholder : users()"
     [tableStyle]="{ width: '100%' }"
     size="small"
-    stripedRows>
+    stripedRows
+    role="table"
+    [attr.aria-label]="'User list table'">
     <ng-template #caption>
       <div class="caption-wrapper">
         <h1>Welcome to our <span class="important-text">USER'S</span> list</h1>
@@ -15,7 +17,8 @@
             icon="pi pi-plus"
             size="small"
             pTooltip="Create User"
-            tooltipPosition="left"></button>
+            tooltipPosition="left"
+            [attr.aria-label]="'Create User'"></button>
         }
       </div>
     </ng-template>
@@ -35,10 +38,16 @@
         <ng-container *ngTemplateOutlet="skeleton"></ng-container>
       } @else {
         <tr class="table-row">
-          <td [pTooltip]="user.username" tooltipPosition="left">{{ user.username | ellipsis }}</td>
-          <td [pTooltip]="user.name" tooltipPosition="left">{{ (user.name | ellipsis) || '-' }}</td>
-          <td [pTooltip]="user.email" tooltipPosition="left">{{ (user.email | ellipsis) || '-' }}</td>
-          <td>{{ user.isAdmin ? 'Yes' : 'No' }}</td>
+          <td [pTooltip]="user.username" tooltipPosition="left" [attr.aria-label]="'Username: {{ user.username }}'">
+            {{ user.username | ellipsis }}
+          </td>
+          <td [pTooltip]="user.name" tooltipPosition="left" [attr.aria-label]="'Name: {{ user.name }}'">
+            {{ (user.name | ellipsis) || '-' }}
+          </td>
+          <td [pTooltip]="user.email" tooltipPosition="left" [attr.aria-label]="'Email: {{ user.email }}'">
+            {{ (user.email | ellipsis) || '-' }}
+          </td>
+          <td [attr.aria-label]="'Admin: ' + (user.isAdmin ? 'Yes' : 'No')">{{ user.isAdmin ? 'Yes' : 'No' }}</td>
           @if (isAdmin()) {
             <td>
               <div class="buttons-wrapper">
@@ -51,7 +60,8 @@
                   size="small"
                   severity="secondary"
                   pTooltip="Edit User"
-                  tooltipPosition="left"></button>
+                  tooltipPosition="left"
+                  [attr.aria-label]="'Edit User'"></button>
                 <button
                   pButton
                   class="button-delete"
@@ -61,7 +71,8 @@
                   size="small"
                   severity="danger"
                   pTooltip="Delete User"
-                  tooltipPosition="right"></button>
+                  tooltipPosition="right"
+                  [attr.aria-label]="'Delete User'"></button>
               </div>
             </td>
           }
@@ -87,7 +98,10 @@
     [modal]="true"
     [visible]="userModalVisible()"
     (visibleChange)="closeUserModal()"
-    [style]="{ width: '600px', margin: '0 20px' }">
+    [style]="{ width: '600px', margin: '0 20px' }"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="dialogHeader">
     <app-user-form
       [selectedUser]="selectedUser()"
       (submitUser)="selectedUser() ? editUser($event) : createUser($event)"

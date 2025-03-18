@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection, isDevMode, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, isDevMode, importProvidersFrom, inject } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -14,6 +14,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './utils/interceptors/auth.interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
 import { errorInterceptor } from './utils/interceptors/error.interceptor';
+import { AuthService } from './utils/services/auth.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -34,8 +35,8 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       JwtModule.forRoot({
         config: {
-          tokenGetter: () => localStorage.getItem('access_token'),
-          allowedDomains: ['localhost:3000'],
+          tokenGetter: () => inject(AuthService).getSessionToken(),
+          allowedDomains: ['localhost:3000'], // Need to be changed to environment variable
         },
       })
     ),

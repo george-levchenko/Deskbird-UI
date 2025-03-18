@@ -11,13 +11,17 @@
     </a>
 
     <div class="user-session-wrapper">
-      <i class="pi pi-user" [pTooltip]="username()" tooltipPosition="bottom" style="font-size: 2rem"></i>
+      <i class="pi pi-user" [pTooltip]="username()" tooltipPosition="bottom" [attr.aria-label]="username()"></i>
       <i
         class="pi pi-sign-out"
         pTooltip="Logout"
         tooltipPosition="bottom"
         (click)="logout()"
-        style="font-size: 2rem"></i>
+        role="button"
+        tabindex="0"
+        aria-label="Logout"
+        (keydown.enter)="logout()"
+        (keydown.space)="logout()"></i>
     </div>
   </div>
 </div>

@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
   readonly maxLengthUsername = maxLength;
   readonly maxLengthPassword = maxLengthPassword;
 
-  readonly authLoading = this.store.selectSignal(selectAuthLoading);
-  readonly authError = this.store.selectSignal(selectAuthError);
+  protected readonly authLoading = this.store.selectSignal(selectAuthLoading);
+  protected readonly authError = this.store.selectSignal(selectAuthError);
 
   readonly authErrorEffect = effect(() => {
     this.form.setErrors({ unauthenticated: !!this.authError() });

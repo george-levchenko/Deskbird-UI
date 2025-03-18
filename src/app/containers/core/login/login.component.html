@@ -10,9 +10,16 @@
 
     <h1 class="header">Sign in to deskbird<sup class="small-text">assessment</sup></h1>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" aria-labelledby="login-header">
       <p-floatlabel class="input-wrapper" variant="on">
-        <input pInputText id="username" formControlName="username" autocomplete="off" fluid />
+        <input
+          pInputText
+          id="username"
+          formControlName="username"
+          autocomplete="off"
+          fluid
+          aria-required="true"
+          [attr.aria-invalid]="usernameField!.invalid && usernameField!.dirty ? 'true' : 'false'" />
         <label for="username">Username</label>
       </p-floatlabel>
       <ng-container
@@ -28,7 +35,9 @@
           autocomplete="off"
           [feedback]="false"
           [toggleMask]="true"
-          fluid />
+          fluid
+          aria-required="true"
+          [attr.aria-invalid]="passwordField!.invalid && passwordField!.dirty ? 'true' : 'false'" />
         <label for="password">Password</label>
       </p-floatlabel>
       <ng-container
@@ -38,7 +47,9 @@
         "></ng-container>
 
       @if (form.errors?.['unauthenticated']) {
-        <p-message icon="pi pi-times-circle" severity="error">{{ this.authError() }}</p-message>
+        <p-message icon="pi pi-times-circle" severity="error" role="alert" aria-live="assertive">{{
+          this.authError()
+        }}</p-message>
       }
 
       <p-button
@@ -47,14 +58,15 @@
         type="submit"
         fluid
         [loading]="authLoading()"
-        [disabled]="form.invalid" />
+        [disabled]="form.invalid"
+        aria-label="Sign In" />
     </form>
   </p-card>
 </div>
 
 <ng-template #errorsTemplate let-field="field" let-minLength="minLength" let-maxLength="maxLength">
   @if (field?.invalid && field?.dirty) {
-    <div class="error-message">
+    <div class="error-message" role="alert" aria-live="assertive">
       @if (field.errors?.['required']) {
         <small class="p-error">Field is required.</small>
       } @else if (field.errors?.['minlength']) {
