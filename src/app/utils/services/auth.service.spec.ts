@@ -52,6 +52,13 @@ describe('AuthService', () => {
     it('should decode the token using jwtDecode', () => {
       const fakeToken = 'fakeToken';
       const decoded = { username: 'testUser', isAdmin: false };
+
+      // Make the jwtDecode property writable so we can spy on it.
+      Object.defineProperty(jwtDecodeModule, 'jwtDecode', {
+        writable: true,
+        value: jwtDecodeModule.jwtDecode,
+      });
+
       spyOn(jwtDecodeModule, 'jwtDecode').and.returnValue(decoded);
 
       const result = service.decodeToken(fakeToken);

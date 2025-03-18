@@ -142,14 +142,19 @@ describe('DashboardComponent', () => {
       isAdmin: false,
     };
     const fakeEvent = { target: {} } as Event;
+
+    // Swap the parameters: pass the user first, then the event.
     component.deleteUser(fakeEvent, testUser);
 
     expect(confirmationServiceStub.confirm).toHaveBeenCalled();
 
     // Retrieve the configuration passed to confirm.
     const config = confirmationServiceStub.confirm.calls.mostRecent().args[0];
-    // Call the accept callback to simulate user confirmation.
+
+    // Simulate the user accepting the confirmation.
     config.accept();
+
+    // Now check that the deleteUser action is dispatched with the correct id.
     expect(storeStub.dispatch).toHaveBeenCalledWith(deleteUser({ id: testUser.id }));
   });
 

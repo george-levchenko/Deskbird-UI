@@ -117,8 +117,7 @@ describe('LoginComponent - with auth error', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [LoginComponent],
-      imports: [ReactiveFormsModule],
+      imports: [LoginComponent, ReactiveFormsModule],
       providers: [{ provide: Store, useValue: storeStub }],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
