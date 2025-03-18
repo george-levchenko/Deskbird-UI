@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 import { LocalStorageService } from './local-storage.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import * as jwtDecodeModule from 'jwt-decode';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -50,19 +49,12 @@ describe('AuthService', () => {
 
   describe('decodeToken', () => {
     it('should decode the token using jwtDecode', () => {
-      const fakeToken = 'fakeToken';
-      const decoded = { username: 'testUser', isAdmin: false };
-
-      // Make the jwtDecode property writable so we can spy on it.
-      Object.defineProperty(jwtDecodeModule, 'jwtDecode', {
-        writable: true,
-        value: jwtDecodeModule.jwtDecode,
-      });
-
-      spyOn(jwtDecodeModule, 'jwtDecode').and.returnValue(decoded);
+      // This token has payload {"username":"testUser","isAdmin":false}
+      const fakeToken = 'eyJhbGciOiJub25lIn0.eyJ1c2VybmFtZSI6InRlc3RVc2VyIiwiaXNBZG1pbiI6ZmFsc2V9.';
+      const expectedDecoded = { username: 'testUser', isAdmin: false };
 
       const result = service.decodeToken(fakeToken);
-      expect(result).toEqual(decoded);
+      expect(result).toEqual(expectedDecoded);
     });
   });
 
@@ -75,10 +67,12 @@ describe('AuthService', () => {
     it('should delegate to jwtHelperService.isTokenExpired when a token exists', () => {
       const token = 'sampleToken';
       localStorageServiceSpy.get.and.returnValue(token);
-      jwtHelperServiceSpy.isTokenExpired.and.returnValue(Promise.resolve(false));
+      // @ts-expect-error no-error
+      jwtHelperServiceSpy.isTokenExpired.and.returnValue(false);
 
       const result = service.isTokenExpired();
-      expect(jwtHelperServiceSpy.isTokenExpired).toHaveBeenCalledWith(Promise.resolve(token));
+      // @ts-expect-error no-error
+      expect(jwtHelperServiceSpy.isTokenExpired).toHaveBeenCalledWith(token);
       expect(result).toBeFalse();
     });
   });

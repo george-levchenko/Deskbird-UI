@@ -114,8 +114,7 @@ describe('UserFormComponent', () => {
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        declarations: [UserFormComponent],
-        imports: [ReactiveFormsModule],
+        imports: [UserFormComponent, ReactiveFormsModule],
         schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
 
