@@ -13,7 +13,7 @@ import { Store } from '@ngrx/store';
 import { addUser, deleteUser, loadUsers, updateUser } from '../../store/users/users.actions';
 import { selectUsers, selectUsersLoading } from '../../store/users/users.selectors';
 import { Skeleton } from 'primeng/skeleton';
-import { NgStyle, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { selectIsAdmin, selectUsername } from '../../store/auth/auth.selectors';
 
 @Component({
@@ -32,7 +32,6 @@ import { selectIsAdmin, selectUsername } from '../../store/auth/auth.selectors';
     UserFormComponent,
     Skeleton,
     NgTemplateOutlet,
-    NgStyle,
   ],
   providers: [ConfirmationService],
 })
