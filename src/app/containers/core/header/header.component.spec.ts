@@ -20,7 +20,7 @@ describe('HeaderComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [HeaderComponent],
+      imports: [HeaderComponent],
       providers: [{ provide: Store, useValue: storeStub }],
       // Use NO_ERRORS_SCHEMA to ignore unknown attributes/directives (like pTooltip, ngSrc)
       schemas: [NO_ERRORS_SCHEMA],

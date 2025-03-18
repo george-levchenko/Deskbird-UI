@@ -16,7 +16,7 @@ describe('AppComponent', () => {
     storeSpy = jasmine.createSpyObj('Store', ['dispatch']);
 
     await TestBed.configureTestingModule({
-      declarations: [AppComponent],
+      imports: [AppComponent],
       providers: [
         { provide: AuthService, useValue: authServiceSpy },
         { provide: Store, useValue: storeSpy },

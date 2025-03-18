@@ -10,8 +10,7 @@ describe('UserFormComponent', () => {
   describe('when creating a new user', () => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        declarations: [UserFormComponent],
-        imports: [ReactiveFormsModule],
+        imports: [UserFormComponent, ReactiveFormsModule],
         // Use NO_ERRORS_SCHEMA to ignore unknown primeng components/directives
         schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();

@@ -56,7 +56,7 @@ describe('DashboardComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [DashboardComponent],
+      imports: [DashboardComponent],
       providers: [
         { provide: Store, useValue: storeStub },
         { provide: ConfirmationService, useValue: confirmationServiceStub },

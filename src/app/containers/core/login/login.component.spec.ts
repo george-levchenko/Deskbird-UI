@@ -31,8 +31,7 @@ describe('LoginComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [LoginComponent],
-      imports: [ReactiveFormsModule],
+      imports: [LoginComponent, ReactiveFormsModule],
       providers: [{ provide: Store, useValue: storeStub }],
       // Ignore unknown elements/directives (like p-card, p-floatlabel, etc.)
       schemas: [NO_ERRORS_SCHEMA],
