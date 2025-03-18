@@ -31,10 +31,6 @@ export class LoginComponent implements OnInit {
   protected readonly authLoading = this.store.selectSignal(selectAuthLoading);
   protected readonly authError = this.store.selectSignal(selectAuthError);
 
-  readonly authErrorEffect = effect(() => {
-    this.form.setErrors({ unauthenticated: !!this.authError() });
-  });
-
   get usernameField() {
     return this.form.get('username');
   }
@@ -47,6 +43,10 @@ export class LoginComponent implements OnInit {
     this.form = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(this.minLength), Validators.maxLength(this.maxLengthUsername)]],
       password: ['', [Validators.required, Validators.minLength(this.minLength), Validators.maxLength(this.maxLengthPassword)]],
+    });
+
+    effect(() => {
+      this.form.setErrors({ unauthenticated: !!this.authError() });
     });
   }
 

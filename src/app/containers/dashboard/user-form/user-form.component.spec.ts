@@ -17,8 +17,8 @@ describe('UserFormComponent', () => {
 
       fixture = TestBed.createComponent(UserFormComponent);
       component = fixture.componentInstance;
-      // For creation scenario, override the getter of selectedUser to return null.
-      Object.defineProperty(component, 'selectedUser', { get: () => null });
+      // For creation scenario, override the getter of selectedUser to return a function that returns null.
+      Object.defineProperty(component, 'selectedUser', { get: () => () => null });
       fixture.detectChanges();
     });
 
@@ -120,8 +120,8 @@ describe('UserFormComponent', () => {
 
       fixture = TestBed.createComponent(UserFormComponent);
       component = fixture.componentInstance;
-      // For creation scenario, override the getter of selectedUser to return null.
-      Object.defineProperty(component, 'selectedUser', { get: () => null });
+      // For update scenario, override the getter of selectedUser to return a function that returns the existing user.
+      Object.defineProperty(component, 'selectedUser', { get: () => () => existingUser });
       fixture.detectChanges();
     });
 
