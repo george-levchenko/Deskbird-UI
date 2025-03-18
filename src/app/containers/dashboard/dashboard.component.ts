@@ -42,11 +42,11 @@ export class DashboardComponent implements OnInit {
   // Get call delayed for 1s just to show this
   skeletonPlaceholder = new Array(5).fill({});
 
-  protected readonly users = this.store.selectSignal(selectUsers);
-  protected readonly selectUsersLoading = this.store.selectSignal(selectUsersLoading);
-  protected readonly isAdmin = this.store.selectSignal(selectIsAdmin);
-  protected readonly selectedUser = signal<User | null>(null);
-  protected readonly userModalVisible = signal(false);
+  readonly users = this.store.selectSignal(selectUsers);
+  readonly selectUsersLoading = this.store.selectSignal(selectUsersLoading);
+  readonly isAdmin = this.store.selectSignal(selectIsAdmin);
+  readonly selectedUser = signal<User | null>(null);
+  readonly userModalVisible = signal(false);
 
   ngOnInit(): void {
     this.store.dispatch(loadUsers());

@@ -11,9 +11,9 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import Material from '@primeng/themes/material';
 import { MessageService } from 'primeng/api';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from './utils/interceptors/auth.interceptor';
+import { authInterceptor } from './utils/interceptors/auth/auth.interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
-import { errorInterceptor } from './utils/interceptors/error.interceptor';
+import { errorInterceptor } from './utils/interceptors/error/error.interceptor';
 import { AuthService } from './utils/services/auth.service';
 
 export const appConfig: ApplicationConfig = {

@@ -1,7 +1,7 @@
 export interface User {
   id?: string;
   username: string;
-  password: string;
+  password?: string;
   name: string;
   email: string;
   isAdmin: boolean;
