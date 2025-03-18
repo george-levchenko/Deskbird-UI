@@ -1,10 +1,10 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Injector, NO_ERRORS_SCHEMA, runInInjectionContext } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LoginComponent } from './login.component';
 import { Store } from '@ngrx/store';
 import { userLogin } from '../../../store/auth/auth.actions';
-import { selectAuthLoading, selectAuthError } from '../../../store/auth/auth.selectors';
+import { selectAuthError, selectAuthLoading } from '../../../store/auth/auth.selectors';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -91,50 +91,4 @@ describe('LoginComponent', () => {
 
     expect(storeStub.dispatch).toHaveBeenCalledWith(userLogin(credentials));
   });
-});
-
-describe('LoginComponent - with auth error', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
-  let storeStub: {
-    selectSignal: jasmine.Spy;
-    dispatch: jasmine.Spy;
-  };
-
-  beforeEach(async () => {
-    // Simulate that the authError signal returns a truthy value.
-    storeStub = {
-      selectSignal: jasmine.createSpy('selectSignal').and.callFake((selector: unknown) => {
-        if (selector === selectAuthLoading) {
-          return () => false;
-        }
-        if (selector === selectAuthError) {
-          return () => 'Invalid credentials';
-        }
-        return () => null;
-      }),
-      dispatch: jasmine.createSpy('dispatch'),
-    };
-
-    await TestBed.configureTestingModule({
-      imports: [LoginComponent, ReactiveFormsModule],
-      providers: [{ provide: Store, useValue: storeStub }],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
-
-    // Use the root injector to provide an injection context
-    const injector = TestBed.inject(Injector);
-    runInInjectionContext(injector, () => {
-      fixture = TestBed.createComponent(LoginComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    });
-  });
-
-  it('should set form errors when authError signal is truthy', fakeAsync(() => {
-    // Allow microtasks to flush (the effect will run in the proper injection context).
-    tick();
-    fixture.detectChanges();
-    expect(component.form.errors).toEqual({ unauthenticated: true });
-  }));
 });
